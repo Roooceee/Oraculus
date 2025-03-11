@@ -34,9 +34,9 @@ async function main(){
    
    let index = 0
    
-   const precedentSigneDetail = document.querySelector('#left-horoscope')
+   const precedentSigneDetail = document.querySelector('#precedent-horoscope')
 
-   const suivantSigneDetail = document.querySelector('#right-horoscope')
+   const suivantSigneDetail = document.querySelector('#suivant-horoscope')
 
    const nomSigne = document.querySelector('#nom_signe')
    const dateSigne = document.querySelector('#date_signe')
@@ -49,21 +49,20 @@ async function main(){
    const logoSigne = document.querySelector('#logo_signe')
    
 
-   function showPrecedentHoroscope(pIndex){
+   function horoscopePrecedent(pIndex){
       pIndex = pIndex === 0 ? allHoroscope.length-1 : pIndex-1 
-      precedentSigneDetail.innerHTML=allHoroscope[pIndex].nom+'<span>'+allHoroscope[pIndex].dates+'</span>'
+      return pIndex
    }
 
-   function showSuivantHoroscope(pIndex){
-      pIndexNext = pIndex === allHoroscope.length-1 ? 0 : pIndex+1
-      suivantSigneDetail.innerHTML=allHoroscope[pIndex].nom+'<span>'+allHoroscope[pIndex].dates+'</span>'
-   }  
-   
-   
+   function horscopeSuivant(pIndex){
+      pIndex = pIndex === allHoroscope.length-1 ? 0 : pIndex+1
+      return pIndex
+   }
+      
    function showHoroscopeByIndex(pIndex){
 
-      showPrecedentHoroscope(pIndex)
-      showSuivantHoroscope(pIndex)
+      precedentSigneDetail.innerHTML=allHoroscope[horoscopePrecedent(index)].nom+'<span>'+allHoroscope[horoscopePrecedent(index)].dates+'</span>'
+      suivantSigneDetail.innerHTML=allHoroscope[horscopeSuivant(index)].nom+'<span>'+allHoroscope[horscopeSuivant(index)].dates+'</span>'
 
       nomSigne.innerHTML = allHoroscope[pIndex].nom
       dateSigne.innerHTML = "Du "+allHoroscope[pIndex].dates
@@ -80,43 +79,22 @@ async function main(){
    showHoroscopeByIndex(index)
    
    suivant.addEventListener('click',(e)=>{
-      if(index==allHoroscope.length-1){
-         index = 0
-      }
-      else{
-         index += 1
-      }
-      showHoroscopeByIndex(index)
+      index = horscopeSuivant(index)
+      showHoroscopeByIndex(horscopeSuivant(index))
    })
    
    precedent.addEventListener('click',(e)=>{
-      if(index==0){
-         index=allHoroscope.length-1
-      }
-      else {
-         index -= 1
-      }
+      index = horoscopePrecedent(index)
       showHoroscopeByIndex(index)
    })
 
-
    suivantSigneDetail.addEventListener('click',(e)=>{
-      if(index==allHoroscope.length-1){
-         index = 0
-      }
-      else{
-         index ++
-      }  
-      showHoroscopeByIndex(index)
+      index = horscopeSuivant(index)
+      showHoroscopeByIndex(horscopeSuivant(index))
    })
 
    precedentSigneDetail.addEventListener('click',(e)=>{
-      if(index==0){
-         index=allHoroscope.length-1
-      }
-      else {
-         index --
-      }
+      index = horoscopePrecedent(index)
       showHoroscopeByIndex(index)
    })
 

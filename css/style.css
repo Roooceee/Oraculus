@@ -1,57 +1,85 @@
 /* Import font CSS */
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
-
+/* Début des variables */
+:root {
+    --font: 'Roboto', sans-serif;
+    --font1: 'Roboto Condensed', sans-serif;
+    --color: #BFBFBF;
+    --color1: #000;
+    --color2: #909090;
+    --color3: #3F3F3F;
+}
 
 /* Début CSS Global */
 * {
-   font-family: var(--font);
+    font-family: var(--font);
     margin: 0;
 }
 
-.uppercase {
-   text-transform: uppercase;
+h1 {
+    font-size: 42px;
+    letter-spacing: 5px;
+    padding-bottom: 20px;
+    font-family: var(--font1);
 }
 
+h2 {
+    font-weight: 400;
+    font-size: 16px;
+    padding-bottom: 10px;
+}
 
-/* Début des variables */
-:root {
-   --font : 'Roboto', sans-serif;
-   --color : #BFBFBF ; 
-   --color1 : #000;
+p, ul > li {
+    font-size: 14px;
+    color: var(--color2);
+    padding-bottom: 10px;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+img {
+    max-width: 100%;
+}
+
+/* Début Class */
+
+.uppercase {
+    text-transform: uppercase;
 }
 
 /* Début CSS Body */
 body {
-   display: flex;
-   justify-content: space-between;
-   align-items: start;
+    display: grid;
+    grid-template-columns: auto 80%;
+    align-items: start;
 }
 
 /* Début CSS header */
 header {
     width: 300px;
-    height: 100vh;
+    min-height: 100vh;
     text-align: center;
     border: 1px solid var(--color);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
 }
 
 header a {
     text-decoration: none;
-    color : var(--color);
+    color: var(--color);
 }
 
-header .active, 
-header a:hover {
-   color: var(--color1);
+header .active, header a:hover {
+    color: var(--color1);
 }
 
 header ul {
     padding: 0;
 }
+
 header li {
     list-style-type: none;
     margin-bottom: 30px;
@@ -72,9 +100,6 @@ header li {
     height: 100px;
     line-height: 100px;
     text-align: center;
-}
-
-.arrow a {
     border-right: 1px solid var(--color);
 }
 
@@ -84,89 +109,113 @@ main {
     grid-template-columns: 60% auto;
 }
 
-#logo_signe {
-   max-width: 100%;
-}
-
-
-aside {
-    height: 100vh;
-    background-image: url('../img/background.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    background-position-x: 90px;
-}
-
 section {
     padding-left: 32px;
 }
 
-section > div {
+aside {
+    min-height: 100vh;
+    background: url('../img/background.png') no-repeat 90px center / cover;
     display: flex;
-    gap: 38px;
-    margin-top: 50px;
-    margin-left: 100px;
+    align-items: center;
 }
 
-section a {
+/* Début CSS Horoscope */
+#horoscope {
+    margin-top: 50px;
+}
+
+#horoscope > div {
+    display: flex;
+    gap: 38px;
+}
+
+#horoscope a {
     text-decoration: none;
-    color: black;
+    color: var(--color1);
     text-transform: uppercase;
     font-size: 18px;
-    display:block;
-    border-top: 1px solid #BFBFBF;
+    display: block;
+    border-top: 1px solid var(--color);
     padding-top: 12px;
 }
 
-article {
-   display: grid;
-   gap: 5px;
-}
-
-body > main > section > article > div {
-   display: grid;
-   gap: 20px;
-}
-
-section a span {
-    display: block;
-    color:#BFBFBF;
-}
-
-section article {
-    transform: translate3d(20px, 30%, 0px);
+#horoscope article {
+    display: grid;
+    gap: 5px;
+    transform: translate3d(20px, 30%, 0);
     padding-right: 24px;
+}
+
+#horoscope a span {
+    display: block;
+    color: var(--color);
 }
 
 article > p {
     font-size: 16px;
-    color:#000;
-    margin:0;
-    padding:0;
+    color: var(--color1);
+    margin: 0;
+    padding: 0;
 }
 
-article h1 {
-    font-size: 42px;
-    margin: 0;
-    padding:0;
-    letter-spacing: 5px;
-    font-family: 'Roboto Condensed', sans-serif;
-}
 #date_signe {
-    color:#909090;
+    color: var(--color2);
     font-size: 16px;
     margin-bottom: 33px;
 }
 
-article div p {
-    font-size: 14px;
-    color:#909090;
+#horoscope div p span {
+    color: var(--color3);
 }
 
-article div p span {
-    color:#3F3F3F;
+/* Début CSS A Propos */
+#a_propos {
+    margin-top: 150px;
+    max-width: 670px;
+}
+
+
+/* Début CSS Contact */
+
+#contact {
+    max-width: 500px;
+    padding-top: 165px;
+}
+
+#contact > p {
+    padding-bottom: 50px;
+}
+
+#contact form {
+    border: 1px solid var(--color);
+    max-width: 430px;
+    display: grid;
+    gap: 30px;
+    padding: 90px;
+}
+
+#contact form input[type='text'], #contact form input[type='email'] {
+    height: 25px;
+}
+
+#contact form input, #contact form textarea{
+    border: none;
+    border-bottom: 1px solid var(--color);
+}
+
+#contact form input[type='text']::placeholder, #contact form input[type='email']::placeholder, #contact form textarea::placeholder {
+    color: var(--color);
+}
+
+#contact form textarea {
+    resize: none;
+    height: 100px;
+}
+
+#contact form input[type='submit']{
+    height: 47px;
+    color: var(--color);
+    background-color: white;
+    border: 1px solid var(--color);
 }
