@@ -1,103 +1,102 @@
-// Permet de faire une requete
-async function request(){
-   
+// Permet de faire une requête
+async function request() {
    try {
-      const req = await fetch(`../horoscope.json`)
-      const response = req.status
-      console.log(response)
+      const req = await fetch(`../horoscope.json`);
+      const response = req.status;
+      console.log(response);
       
-      if(response == 200){
-         const datas = await req.json()
-         return datas
+      if (response === 200) {
+         const datas = await req.json();
+         return datas;
       }
-      
-   }
-   catch(e){
-      console.log(e)
-      return null
+   } catch (e) {
+      console.log(e);
+      return null;
    }
 }
 
 
-async function main(){
+function horoscopePrecedent(pIndex, allHoroscope){
+   pIndex = pIndex === 0 ? allHoroscope.length-1 : pIndex-1 
+   return pIndex
+}
 
-   let allHoroscope = await request()
+function horscopeSuivant(pIndex,allHoroscope){
+   pIndex = pIndex === allHoroscope.length-1 ? 0 : pIndex+1
+   return pIndex
+}
 
-   const today = new Date()
+// Fonction pour afficher l'horoscope
+function showHoroscopeByIndex(pIndex, allHoroscope) {
+   const precedentSigneDetail = document.querySelector('#precedent-horoscope');
+   const suivantSigneDetail = document.querySelector('#suivant-horoscope');
+   const nomSigne = document.querySelector('#nom_signe');
+   const dateSigne = document.querySelector('#date_signe');
+   const amourSigne = document.querySelector('#amour_signe');
+   const travailSigne = document.querySelector('#travail_signe');
+   const argentSigne = document.querySelector('#argent_signe');
+   const santeSigne = document.querySelector('#sante_signe');
+   const familleAmisSigne = document.querySelector('#famille_amis_signe');
+   const conseilSigne = document.querySelector('#conseil_signe');
+   const logoSigne = document.querySelector('#logo_signe');
+
+   precedentSigneDetail.innerHTML = allHoroscope[horoscopePrecedent(pIndex,allHoroscope)].nom + '<span>' + allHoroscope[horoscopePrecedent(pIndex,allHoroscope)].dates + '</span>';
+   suivantSigneDetail.innerHTML = allHoroscope[horscopeSuivant(pIndex,allHoroscope)].nom + '<span>' + allHoroscope[horscopeSuivant(pIndex,allHoroscope)].dates + '</span>';
+
+   nomSigne.innerHTML = allHoroscope[pIndex].nom;
+   dateSigne.innerHTML = "Du " + allHoroscope[pIndex].dates;
+   amourSigne.innerHTML = "<span>Amour : </span>" + allHoroscope[pIndex].amour;
+   travailSigne.innerHTML = "<span>Travail : </span>" + allHoroscope[pIndex].travail;
+   argentSigne.innerHTML = "<span>Argent : </span>" + allHoroscope[pIndex].argent;
+   santeSigne.innerHTML = "<span>Santé : </span>" + allHoroscope[pIndex].sante;
+   familleAmisSigne.innerHTML = "<span>Famille et amis : </span>" + allHoroscope[pIndex].famille_et_amis;
+   conseilSigne.innerHTML = "<span>Conseil : </span>" + allHoroscope[pIndex].conseil;
+   logoSigne.src = allHoroscope[pIndex].imageURL;
+   logoSigne.alt = allHoroscope[pIndex].nom;
+}
+
+async function main() {
+
+   const allHoroscope = await request();
    
+   const today = new Date();
    const h1 = document.querySelector('#datejour');
-   const month =today.getMonth()<9 ? "0"+(today.getMonth()+1) : today.getMonth()+1
-   h1.textContent +=" "+today.getDate()+"/"+month+"/"+today.getFullYear()
-   
-   const suivant = document.querySelector('#arrow-right')
-   const precedent = document.querySelector('#arrow-left')
-   
-   let index = 0
-   
-   const precedentSigneDetail = document.querySelector('#precedent-horoscope')
+   const month = today.getMonth() < 9 ? "0" + (today.getMonth() + 1) : today.getMonth() + 1;
+   h1.textContent += " " + today.getDate() + "/" + month + "/" + today.getFullYear();
 
-   const suivantSigneDetail = document.querySelector('#suivant-horoscope')
+   let index = 0;
 
-   const nomSigne = document.querySelector('#nom_signe')
-   const dateSigne = document.querySelector('#date_signe')
-   const amourSigne = document.querySelector('#amour_signe')
-   const travailSigne = document.querySelector('#travail_signe')
-   const argentSigne = document.querySelector('#argent_signe')
-   const santeSigne = document.querySelector('#sante_signe')
-   const familleAmisSigne = document.querySelector('#famille_amis_signe')
-   const conseilSigne = document.querySelector('#conseil_signe')
-   const logoSigne = document.querySelector('#logo_signe')
-   
-
-   function horoscopePrecedent(pIndex){
-      pIndex = pIndex === 0 ? allHoroscope.length-1 : pIndex-1 
-      return pIndex
+   if (!allHoroscope) {
+      console.error('Failed to load horoscope data');
    }
-
-   function horscopeSuivant(pIndex){
-      pIndex = pIndex === allHoroscope.length-1 ? 0 : pIndex+1
-      return pIndex
-   }
+   else {
       
-   function showHoroscopeByIndex(pIndex){
-
-      precedentSigneDetail.innerHTML=allHoroscope[horoscopePrecedent(index)].nom+'<span>'+allHoroscope[horoscopePrecedent(index)].dates+'</span>'
-      suivantSigneDetail.innerHTML=allHoroscope[horscopeSuivant(index)].nom+'<span>'+allHoroscope[horscopeSuivant(index)].dates+'</span>'
-
-      nomSigne.innerHTML = allHoroscope[pIndex].nom
-      dateSigne.innerHTML = "Du "+allHoroscope[pIndex].dates
-      amourSigne.innerHTML = "<span>Amour : </span>"+allHoroscope[pIndex].amour
-      travailSigne.innerHTML = "<span>Travail : </span>"+allHoroscope[pIndex].travail
-      argentSigne.innerHTML = "<span>Argent : </span>"+allHoroscope[pIndex].argent
-      santeSigne.innerHTML = "<span>Santé : </span>"+allHoroscope[pIndex].sante
-      familleAmisSigne.innerHTML = "<span>Famille et amis : </span>"+allHoroscope[pIndex].famille_et_amis
-      conseilSigne.innerHTML = "<span>Conseil : </span>"+allHoroscope[pIndex].conseil
-      logoSigne.src =allHoroscope[pIndex].imageURL
-      logoSigne.alt = allHoroscope[pIndex].nom
+   
+      // Initial horoscope display
+      showHoroscopeByIndex(index, allHoroscope);
+   
+      // Event listeners for horoscope navigation
+      document.querySelector('#arrow-right').addEventListener('click', () => {
+         index = horscopeSuivant(index,allHoroscope);
+         showHoroscopeByIndex(index, allHoroscope);
+      });
+   
+      document.querySelector('#arrow-left').addEventListener('click', () => {
+         index = horoscopePrecedent(index,allHoroscope);
+         showHoroscopeByIndex(index, allHoroscope);
+      });
+   
+      document.querySelector('#suivant-horoscope').addEventListener('click', () => {
+         index = horscopeSuivant(index,allHoroscope);
+         showHoroscopeByIndex(index, allHoroscope);
+      });
+   
+      document.querySelector('#precedent-horoscope').addEventListener('click', () => {
+         index = horoscopePrecedent(index,allHoroscope);
+         showHoroscopeByIndex(index, allHoroscope);
+      });
    }
-   
-   showHoroscopeByIndex(index)
-   
-   suivant.addEventListener('click',(e)=>{
-      index = horscopeSuivant(index)
-      showHoroscopeByIndex(horscopeSuivant(index))
-   })
-   
-   precedent.addEventListener('click',(e)=>{
-      index = horoscopePrecedent(index)
-      showHoroscopeByIndex(index)
-   })
-
-   suivantSigneDetail.addEventListener('click',(e)=>{
-      index = horscopeSuivant(index)
-      showHoroscopeByIndex(horscopeSuivant(index))
-   })
-
-   precedentSigneDetail.addEventListener('click',(e)=>{
-      index = horoscopePrecedent(index)
-      showHoroscopeByIndex(index)
-   })
 
 }
 
-main()
+main();
