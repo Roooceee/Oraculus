@@ -1,7 +1,9 @@
 // Permet de faire une requête
 async function request() {
    try {
-      const req = await fetch(`../horoscope.json`);
+
+      // const req = await fetch(`../horoscope.json`);
+      const req = await fetch(`https://raw.githubusercontent.com/Roooceee/Oraculus/refs/heads/main/horoscope.json`); // url du fichier JSON depuis mon repo github
       const response = req.status;
       console.log(response);
       
